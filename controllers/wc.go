@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"log"
@@ -14,7 +15,7 @@ func SetDB(db *sql.DB) {
 	database = db
 }
 
-func Get() http.HandlerFunc {
+func Get(ctx context.Context) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		type Workcenter struct {
@@ -26,7 +27,7 @@ func Get() http.HandlerFunc {
 			StatusSetAt     time.Time
 		}
 
-		result, err := database.Query(
+		result, err := database.QueryContext(ctx,
 			`SELECT
 			id, wc_name, current_product, wc_status, escalation_level
 		FROM workcenters

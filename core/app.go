@@ -19,11 +19,13 @@ func Run() *Server {
 	}
 	s.RegisterRoutes()
 
-	database, err := GetDB()
+	var err error
+	s.database, err = GetDB()
 	if err != nil {
 		log.Fatalf("could not connect to database: %v", err)
 	}
-	controllers.SetDB(database)
+	controllers.SetDB(s.database)
+	defer s.database.Close()
 	log.Fatal(http.ListenAndServe(":3000", s.router))
 	return s
 }
