@@ -9,6 +9,8 @@ import (
 func ReadJSON() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
+
+		fmt.Println("requestID readjson", r.Header.Get("request-id"))
 		var jsonInput map[string]interface{}
 		err := json.NewDecoder(r.Body).Decode(&jsonInput)
 
@@ -23,8 +25,6 @@ func ReadJSON() http.HandlerFunc {
 		if err != nil {
 			fmt.Errorf("error  %w", err)
 		}
-
 	}
-
 }
 

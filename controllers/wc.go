@@ -18,6 +18,9 @@ func SetDB(db *sql.DB) {
 func Get(ctx context.Context) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
+
+		fmt.Println("requestID - Get", r.Header.Get("request-id"))
+
 		type Workcenter struct {
 			ID              int
 			Name            string
